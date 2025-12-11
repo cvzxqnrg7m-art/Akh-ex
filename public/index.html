@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proof & Response — Islamic Apologetics Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --green: #0F5132;
+            --gold: #D6A24B;
+            --char: #111316;
+            --bg: #FAFBFB;
+            --card: #FFFFFF;
+            --muted: #666;
+            --max: 1200px;
+            --radius: 12px;
+            --error: #dc3545;
+            --success: #28a745;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            color: var(--char);
+            background: var(--bg);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: var(--max);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(15, 81, 50, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            color: var(--green);
+            font-size: 20px;
+        }
+
+        .logo .mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--green), #15593f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(15, 81, 50, 0.2);
+        }
+
+        nav {
+            display: flex;
+            gap: 28px;
+        }
+
+        nav a {
+            color: var(--char);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            color: var(--green);
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .cta {
+            background: var(--gold);
+            padding: 10px 20px;
+            border-radius: var(--radius);
+            color: var(--char);
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(214, 162, 75, 0.3);
+        }
+
+        .cta.secondary {
+            background: transparent;
+            border: 2px solid var(--green);
+            color: var(--green);
+            padding: 8px 18px;
+        }
+
+        .cta.secondary:hover {
+            background: var(--green);
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+            padding: 60px 0;
+            min-height: 80vh;
+        }
+
+        .hero-left {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            color: var(--green);
+        }
+
+        .hero p.lead {
+            font-size: 1.2rem;
+            color: var(--muted);
+            margin-bottom: 2rem;
+            max-width: 500px;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Question Container */
+        .question-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 420px;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(15, 81, 50, 0.1);
+        }
+
+        .question-header {
+            background: linear-gradient(135deg, var(--green), #15593f);
+            color: white;
+            padding: 20px 25px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .question-header i {
+            font-size: 1.3rem;
+        }
+
+        .question-content {
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            overflow: hidden;
+        }
+
+        .question-text {
+            font-size: 1rem;
+            color: var(--muted);
+            text-align: center;
+            line-height: 1.6;
+            margin: 0;
+            flex-shrink: 0;
+        }
+
+        .question-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--char);
+            flex-shrink: 0;
+        }
+
+        .question-textarea {
+            width: 100%;
+            height: 150px;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            resize: none;
+            transition: all 0.3s ease;
+            background: #fafafa;
+            flex-shrink: 0;
+        }
+
+        .question-textarea:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(214, 162, 75, 0.1);
+        }
+
+        .question-submit {
+            background: linear-gradient(135deg, var(--green), #15593f);
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .question-submit:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(15, 81, 50, 0.3);
+        }
+
+        .question-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 5px;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .success-message {
+            text-align: center;
+            padding: 30px 20px;
+            animation: fadeIn 0.5s ease;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .success-message i {
+            font-size: 2.5rem;
+            color: var(--success);
+            margin-bottom: 15px;
+            animation: scaleIn 0.5s ease;
+        }
+
+        .success-message h3 {
+            color: var(--green);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .question-note {
+            font-size: 0.85rem;
+            color: var(--muted);
+            text-align: center;
+            margin-top: 10px;
+            opacity: 0.8;
+            flex-shrink: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0); }
+            to { transform: scale(1); }
+        }
+
+        /* Floating Owner Button */
+        .owner-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .owner-button.authenticated {
+            background: var(--green);
+            color: white;
+        }
+
+        .owner-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 200px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--green);
+            line-height: 1.4;
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .card .btn {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: fit-content;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .card .btn:hover {
+            background: #0a3d24;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(15, 81, 50, 0.2);
+        }
+
+        /* Section Headers */
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--green);
+            margin: 80px 0 40px;
+            position: relative;
+            text-align: center;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gold);
+            border-radius: 2px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin: 80px 0;
+        }
+
+        .faq-container {
+            max-width: 900px;
+            margin: 40px auto 0;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: var(--radius);
+            margin-bottom: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .faq-question {
+            padding: 24px 30px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--green);
+            transition: all 0.3s ease;
+            background: white;
+            font-size: 1.1rem;
+        }
+
+        .faq-question:hover {
+            background: #f9f9f9;
+            color: var(--char);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .faq-item.active .faq-question {
+            background: #f9f9f9;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            color: var(--muted);
+            line-height: 1.7;
+            background: #f9f9f9;
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 30px 30px;
+            max-height: 2000px;
+        }
+
+        .quran-verse {
+            font-style: italic;
+            background: rgba(214, 162, 75, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid var(--gold);
+            color: var(--char);
+            line-height: 1.8;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 80px;
+            padding: 50px 0;
+            border-top: 1px solid rgba(0,0,0,0.1);
+            background: white;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .pbuh {
+            font-family: 'Traditional Arabic', 'Times New Roman', serif;
+            font-size: 0.8em;
+            vertical-align: super;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                padding: 40px 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .question-container {
+                height: 420px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+
+            nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .hero p.lead {
+                text-align: center;
+                margin: 0 auto 2rem;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .topics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .faq-question {
+                padding: 20px;
+                font-size: 1rem;
+            }
+
+            .faq-answer {
+                padding: 0 20px;
+            }
+
+            .faq-item.active .faq-answer {
+                padding: 0 20px 20px;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin: 60px 0 30px;
+            }
+
+            .owner-button {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .question-container {
+                height: 420px;
+            }
+
+            .question-header {
+                padding: 15px 20px;
+            }
+
+            .question-content {
+                padding: 20px;
+            }
+
+            .question-textarea {
+                height: 130px;
+                padding: 12px;
+            }
+
+            .owner-button {
+                width: 40px;
+                height: 40px;
+                bottom: 15px;
+                right: 15px;
+            }
+
+            .owner-button i {
+                font-size: 16px;
+            }
+        }
+
+        /* Accessibility */
+        a:focus, button:focus, input:focus, textarea:focus {
+            outline: 3px solid rgba(214, 162, 75, 0.4);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="mark">PR</div>
+                <div>
+                    <div>Proof & Response</div>
+                    <div style="font-size:12px; color: var(--muted);">Islamic responses to major Christian claims</div>
+                </div>
+            </div>
+
+            <nav>
+                <a href="#key-disagreements">Key Disagreements</a>
+                <a href="#proving-islam">Proving Islam</a>
+                <a href="#faq-section">FAQ</a>
+                <a href="community.html">Q&A</a>
+            </nav>
+
+            <a class="cta" href="community.html">
+                <i class="fas fa-question-circle"></i> View Questions
+            </a>
+        </header>
+
+        <!-- Hero Section with Question Form -->
+        <section class="hero">
+            <div class="hero-left">
+                <h1>Evidence-Based Islamic Responses to Christian Theology</h1>
+                <p class="lead">Clarifying Islamic perspectives through textual analysis, historical evidence, and rational discourse</p>
+                <div class="hero-actions">
+                    <a class="cta" href="#key-disagreements">
+                        <i class="fas fa-book-open"></i> Explore Topics
+                    </a>
+                    <a class="cta secondary" href="community.html">
+                        <i class="fas fa-users"></i> View Users Questions
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-right">
+                <div class="question-container">
+                    <div class="question-header">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Submit a Question</span>
+                    </div>
+
+                    <div class="question-content">
+                        <p class="question-text">
+                            Ask a question about Islam or Christianity. 
+                            Your question will be publicly answered on our website for everyone's benefit.
+                        </p>
+
+                        <form id="questionForm" class="question-form">
+                            <div class="form-group">
+                                <label for="question">Your Question *</label>
+                                <textarea 
+                                    id="question"
+                                    class="question-textarea"
+                                    placeholder="Type your question here (minimum 20 characters)..."
+                                    required
+                                    minlength="20"
+                                ></textarea>
+                                <div class="error-message" id="questionError"></div>
+                            </div>
+
+                            <button type="submit" class="question-submit" id="submitBtn">
+                                <i class="fas fa-paper-plane"></i> Submit Question Publicly
+                            </button>
+                        </form>
+
+                        <div id="successMessage" class="success-message" style="display: none;">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Question Submitted Successfully!</h3>
+                            <p>Your question has been posted to our community Q&A section.</p>
+                            <p class="question-note">Check back soon for an answer!</p>
+                        </div>
+
+                        <p class="question-note">
+                            <i class="fas fa-users"></i> All questions and answers are public for community learning.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Disagreements Section -->
+        <h2 id="key-disagreements">Key Disagreements Between Islam and Christianity</h2>
+        <div class="topics-grid" role="list">
+            <!-- Your existing cards here - keep them as they are -->
+            <article class="card" role="listitem">
+                <h3>Jesus Never Claimed Divinity</h3>
+                <p>Examining Jesus' own statements about his nature and mission versus later Christian doctrines</p>
+                <a class="btn" href="jesus-divinity.html">Read Analysis</a>
+            </article>
+            <!-- ... rest of your cards ... -->
+        </div>
+
+        <!-- Proving Islam Section -->
+        <h2 id="proving-islam">Proving Islam: Evidence & Responses</h2>
+        <div class="topics-grid" role="list">
+            <!-- Your existing cards here - keep them as they are -->
+            <article class="card" role="listitem">
+                <h3>Refuting Islamic Dilemma</h3>
+                <p>Addressing common misconceptions and objections about Islam</p>
+                <a class="btn" href="refuting-dilemma.html">Read Analysis</a>
+            </article>
+            <!-- ... rest of your cards ... -->
+        </div>
+
+        <!-- FAQ Section -->
+        <section class="faq-section" id="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <!-- Your existing FAQ items here - keep them as they are -->
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>What are the Taurah and the Injil in the Quran?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <!-- FAQ content -->
+                    </div>
+                </div>
+                <!-- ... rest of your FAQ items ... -->
+            </div>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div>
+                    <strong>Proof & Response</strong><br />
+                    <small style="color: var(--muted);">Methodology: primary texts, textual criticism, historical sources.</small>
+                </div>
+                <div style="color: var(--muted);">
+                    <small>© 2024 Islamic Apologetics Platform. All rights reserved.</small>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Floating Owner Button -->
+    <div class="owner-button" id="ownerButton" title="Owner Authentication">
+        <i class="fas fa-user-shield"></i>
+    </div>
+
+    <script>
+        // FAQ Accordion Functionality
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Form Validation
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+        }
+
+        // Owner Authentication
+        const OWNER_CODE = "7192834650";
+        let isOwnerAuthenticated = localStorage.getItem('ownerAuthenticated') === 'true';
+
+        // Update owner button on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateOwnerButton();
+        });
+
+        function updateOwnerButton() {
+            const btn = document.getElementById('ownerButton');
+            if (isOwnerAuthenticated) {
+                btn.classList.add('authenticated');
+                btn.title = "Owner (Authenticated) - Click to logout";
+            } else {
+                btn.classList.remove('authenticated');
+                btn.title = "Owner Authentication";
+            }
+            
+            btn.onclick = function() {
+                if (isOwnerAuthenticated) {
+                    if (confirm("Log out as owner?")) {
+                        localStorage.removeItem('ownerAuthenticated');
+                        isOwnerAuthenticated = false;
+                        updateOwnerButton();
+                        alert("Logged out.");
+                    }
+                } else {
+                    authenticateOwner();
+                }
+            };
+        }
+
+        function authenticateOwner() {
+            const code = prompt("Enter owner code:");
+            if (code === OWNER_CODE) {
+                isOwnerAuthenticated = true;
+                localStorage.setItem('ownerAuthenticated', 'true');
+                updateOwnerButton();
+                alert("Owner authentication successful!");
+            } else if (code !== null) {
+                alert("Invalid code.");
+            }
+        }
+
+        // Question Form Submission - USING BACKEND API
+        document.getElementById('questionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const question = document.getElementById('question').value.trim();
+            
+            hideError('questionError');
+            
+            let isValid = true;
+            
+            if (!question) {
+                showError('questionError', 'Question is required');
+                isValid = false;
+            } else if (question.length < 20) {
+                showError('questionError', 'Question must be at least 20 characters');
+                isValid = false;
+            }
+            
+            if (!isValid) return;
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Posting...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Get user info
+                const userAgent = navigator.userAgent;
+                const timestamp = new Date().toISOString();
+                
+                // Send to backend
+                const response = await fetch('/api/submit-question', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name: "User",
+                        email: "user@example.com",
+                        question: question,
+                        timestamp: timestamp,
+                        ip: "unknown",
+                        userAgent: userAgent
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('questionForm').style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                    
+                    setTimeout(() => {
+                        window.location.href = 'community.html?newQuestion=true&t=' + Date.now();
+                    }, 2000);
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showError('questionError', 'Failed to submit. Please try again.');
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const section = document.querySelector(href);
+                    if (section) {
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community Q&A — Proof & Response</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --green: #0F5132;
+            --gold: #D6A24B;
+            --light-green: rgba(15, 81, 50, 0.05);
+            --light-gold: rgba(214, 162, 75, 0.05);
+            --char: #222;
+            --bg: #f6f7f8;
+            --card: #FFFFFF;
+            --border: #e0e0e0;
+            --muted: #666;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--char);
+            line-height: 1.6;
+            padding-bottom: 80px; /* Space for floating button */
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--green);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+        }
+
+        nav {
+            margin-top: 20px;
+        }
+
+        nav a {
+            color: var(--char);
+            text-decoration: none;
+            margin: 0 10px;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: var(--bg);
+        }
+
+        .cta-button {
+            background: var(--green);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Question Card */
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .question-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--bg);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .question-info {
+            flex: 1;
+        }
+
+        .question-author {
+            font-weight: 600;
+            color: var(--char);
+        }
+
+        .question-date {
+            font-size: 14px;
+            color: var(--muted);
+        }
+
+        .question-content {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            padding-left: 10px;
+        }
+
+        .question-actions {
+            display: flex;
+            gap: 15px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.2s;
+        }
+
+        .action-button:hover {
+            background: var(--bg);
+        }
+
+        .action-button.active {
+            background: var(--light-green);
+            color: var(--green);
+        }
+
+        .action-button.liked {
+            color: var(--green);
+        }
+
+        /* Author's Answer */
+        .authors-answer {
+            margin-top: 25px;
+            padding: 20px;
+            background: var(--light-green);
+            border-radius: 8px;
+            border-left: 4px solid var(--green);
+        }
+
+        .answer-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .answer-author {
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .owner-badge {
+            background: var(--green);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .answer-date {
+            font-size: 14px;
+            color: var(--muted);
+            margin-left: auto;
+        }
+
+        .answer-content {
+            padding-left: 10px;
+            line-height: 1.5;
+        }
+
+        /* Community Answers Section */
+        .answers-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid var(--border);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .answer-card {
+            background: var(--light-green);
+            border-left: 4px solid var(--green);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .answer-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            padding-left: 10px;
+        }
+
+        /* Answer Form */
+        .side-form-container {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 350px;
+            height: 100%;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            padding: 25px;
+            overflow-y: auto;
+        }
+
+        .side-form-container.active {
+            transform: translateX(0);
+        }
+
+        .side-form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .side-form-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--green);
+        }
+
+        .close-form {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--muted);
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--char);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 150px;
+            padding: 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 14px;
+            resize: vertical;
+        }
+
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        /* Floating Owner Button */
+        .owner-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 2px solid var(--green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--green);
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .owner-button.authenticated {
+            background: var(--green);
+            color: white;
+        }
+
+        .owner-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--muted);
+            font-size: 14px;
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .question-card {
+                padding: 20px;
+            }
+            
+            .question-content {
+                font-size: 16px;
+            }
+            
+            .question-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .action-button {
+                justify-content: center;
+            }
+            
+            .side-form-container {
+                width: 100%;
+            }
+            
+            .owner-button {
+                width: 44px;
+                height: 44px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .owner-button {
+                width: 40px;
+                height: 40px;
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .owner-button i {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <div class="logo-icon">PR</div>
+                <div class="logo-text">Proof & Response</div>
+            </div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="index.html#key-disagreements">Topics</a>
+                <a href="index.html#faq-section">FAQ</a>
+                <a href="community.html" class="cta-button">Community</a>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <div id="mainContent">
+            <div class="empty-state" id="emptyState">
+                <i class="fas fa-comments"></i>
+                <h3>No questions yet</h3>
+                <p>Be the first to ask a question about Islam or Christianity!</p>
+                <a href="index.html" class="cta-button" style="display: inline-block; margin-top: 15px;">
+                    <i class="fas fa-question-circle"></i> Ask a Question
+                </a>
+            </div>
+        </div>
+
+        <footer>
+            <div>Proof & Response Community</div>
+            <div style="font-size: 12px; margin-top: 5px;">© 2024 Islamic Apologetics Platform</div>
+        </footer>
+    </div>
+
+    <!-- Floating Owner Button -->
+    <div class="owner-button" id="ownerButton" title="Owner Authentication">
+        <i class="fas fa-user-shield"></i>
+    </div>
+
+    <!-- Overlay for side form -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Side Form for Answering -->
+    <div class="side-form-container" id="sideForm">
+        <div class="side-form-header">
+            <div class="side-form-title" id="formTitle">Post an Answer</div>
+            <button class="close-form" onclick="closeSideForm()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Your Name</label>
+            <input type="text" class="form-input" id="answerName" placeholder="Enter your name (optional)">
+        </div>
+        
+        <div class="form-group">
+            <label class="form-label">Your Answer</label>
+            <textarea class="form-textarea" id="answerContent" placeholder="Write your answer here..."></textarea>
+        </div>
+        
+        <button class="submit-button" style="width: 100%; padding: 12px; background: var(--green); color: white; border: none; border-radius: 6px; cursor: pointer;" onclick="submitAnswerFromForm()">
+            Post Answer
+        </button>
+    </div>
+
+    <script>
+        const OWNER_CODE = "7192834650";
+        let isOwnerAuthenticated = localStorage.getItem('ownerAuthenticated') === 'true';
+        let currentQuestionId = null;
+        let allQuestions = [];
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateOwnerButton();
+            loadQuestions();
+            
+            document.getElementById('ownerButton').addEventListener('click', function() {
+                if (isOwnerAuthenticated) {
+                    if (confirm("Log out as owner?")) {
+                        localStorage.removeItem('ownerAuthenticated');
+                        isOwnerAuthenticated = false;
+                        updateOwnerButton();
+                        loadQuestions();
+                        alert("Logged out.");
+                    }
+                } else {
+                    authenticateOwner();
+                }
+            });
+            
+            // Close form when clicking overlay
+            document.getElementById('overlay').addEventListener('click', closeSideForm);
+        });
+
+        function authenticateOwner() {
+            const code = prompt("Enter owner code:");
+            if (code === OWNER_CODE) {
+                isOwnerAuthenticated = true;
+                localStorage.setItem('ownerAuthenticated', 'true');
+                updateOwnerButton();
+                loadQuestions();
+                alert("Owner authentication successful!");
+            } else if (code !== null) {
+                alert("Invalid code.");
+            }
+        }
+
+        function updateOwnerButton() {
+            const btn = document.getElementById('ownerButton');
+            if (isOwnerAuthenticated) {
+                btn.classList.add('authenticated');
+                btn.title = "Owner (Authenticated) - Click to logout";
+            } else {
+                btn.classList.remove('authenticated');
+                btn.title = "Owner Authentication";
+            }
+        }
+
+        async function loadQuestions() {
+            try {
+                const response = await fetch('/api/questions');
+                allQuestions = await response.json();
+                
+                if (!Array.isArray(allQuestions)) {
+                    allQuestions = [];
+                }
+                
+                displayQuestions();
+            } catch (error) {
+                console.error('Error loading questions:', error);
+                allQuestions = [];
+                displayQuestions();
+            }
+        }
+
+        function displayQuestions() {
+            const mainContent = document.getElementById('mainContent');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (!allQuestions || allQuestions.length === 0) {
+                emptyState.style.display = 'block';
+                mainContent.innerHTML = '';
+                return;
+            }
+            
+            emptyState.style.display = 'none';
+            allQuestions.sort((a, b) => b.id - a.id);
+            
+            mainContent.innerHTML = allQuestions.map(q => createQuestionHTML(q)).join('');
+        }
+
+        function createQuestionHTML(q) {
+            const answers = q.answers || [];
+            const ownerAnswers = answers.filter(a => a.isOwner);
+            const communityAnswers = answers.filter(a => !a.isOwner);
+            const date = q.timestamp ? new Date(q.timestamp).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            }) : 'Unknown date';
+            
+            return `
+                <div class="question-card" data-id="${q.id}">
+                    <div class="question-header">
+                        <div class="user-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="question-info">
+                            <div class="question-author">${q.name || 'Anonymous'}</div>
+                            <div class="question-date">${date}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="question-content">
+                        ${q.question}
+                    </div>
+                    
+                    <div class="question-actions">
+                        <button class="action-button" onclick="likeQuestion(${q.id}, this)">
+                            <i class="fas fa-thumbs-up"></i>
+                            <span class="like-count">${q.likes || 0}</span>
+                        </button>
+                        <button class="action-button" onclick="openAnswerForm(${q.id})">
+                            <i class="fas fa-comment"></i>
+                            <span>Answer</span>
+                        </button>
+                        <button class="action-button" onclick="toggleAnswers(${q.id}, this)">
+                            <i class="fas fa-users"></i>
+                            <span>Community Answers (${communityAnswers.length})</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Owner's Answer -->
+                    ${ownerAnswers.map(answer => `
+                        <div class="authors-answer">
+                            <div class="answer-header">
+                                <span class="answer-author">Author</span>
+                                <span class="owner-badge">Author</span>
+                                <span class="answer-date">${answer.date || date}</span>
+                            </div>
+                            <div class="answer-content">
+                                ${answer.content || answer.response || ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                    
+                    <!-- Community Answers (Hidden by default) -->
+                    <div class="answers-section" id="answers-${q.id}" style="display: none;">
+                        <div class="section-title">
+                            <i class="fas fa-users"></i>
+                            <span>Community Answers</span>
+                        </div>
+                        
+                        ${communityAnswers.length > 0 ? 
+                            communityAnswers.map(answer => createAnswerHTML(answer)).join('') :
+                            '<p style="color: var(--muted); padding: 20px; text-align: center;">No community answers yet.</p>'
+                        }
+                    </div>
+                </div>
+            `;
+        }
+
+        function createAnswerHTML(answer) {
+            const date = answer.date || new Date().toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+            
+            return `
+                <div class="answer-card">
+                    <div class="answer-header">
+                        <span class="answer-author">
+                            ${answer.author || 'Anonymous'}
+                            ${answer.isOwner ? '<span class="owner-badge">Author</span>' : ''}
+                        </span>
+                        <span class="answer-date">${date}</span>
+                    </div>
+                    
+                    <div class="answer-content">
+                        ${answer.content}
+                    </div>
+                </div>
+            `;
+        }
+
+        function openAnswerForm(questionId) {
+            currentQuestionId = questionId;
+            document.getElementById('overlay').classList.add('active');
+            document.getElementById('sideForm').classList.add('active');
+            document.getElementById('answerContent').focus();
+        }
+
+        function closeSideForm() {
+            document.getElementById('overlay').classList.remove('active');
+            document.getElementById('sideForm').classList.remove('active');
+            document.getElementById('answerName').value = '';
+            document.getElementById('answerContent').value = '';
+            currentQuestionId = null;
+        }
+
+        async function submitAnswerFromForm() {
+            const name = document.getElementById('answerName').value.trim();
+            const content = document.getElementById('answerContent').value.trim();
+            
+            if (!content) {
+                alert("Please write an answer.");
+                return;
+            }
+            
+            if (!isOwnerAuthenticated && !name) {
+                alert("Please enter your name.");
+                return;
+            }
+            
+            try {
+                const response = await fetch(`/api/questions/${currentQuestionId}/answer`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        answer: content,
+                        author: name || 'Anonymous',
+                        isOwner: isOwnerAuthenticated
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    closeSideForm();
+                    await loadQuestions();
+                    alert("Answer posted successfully!");
+                } else {
+                    throw new Error(result.message);
+                }
+            } catch (error) {
+                console.error('Error posting answer:', error);
+                alert("Failed to post answer. Please try again.");
+            }
+        }
+
+        async function likeQuestion(questionId, button) {
+            try {
+                const response = await fetch(`/api/questions/${questionId}/like`, {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const likeCount = button.querySelector('.like-count');
+                    likeCount.textContent = result.likes;
+                    button.classList.add('liked');
+                }
+            } catch (error) {
+                console.error('Error liking question:', error);
+            }
+        }
+
+        function toggleAnswers(questionId, button) {
+            const answersSection = document.getElementById(`answers-${questionId}`);
+            if (answersSection.style.display === 'none') {
+                answersSection.style.display = 'block';
+                button.classList.add('active');
+            } else {
+                answersSection.style.display = 'none';
+                button.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
