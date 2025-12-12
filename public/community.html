@@ -76,13 +76,85 @@
             color: var(--green);
         }
 
-        nav {
-            margin-top: 20px;
+        /* Header and Navigation */
+        header {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
+            justify-content: space-between;
             align-items: center;
+            padding: 15px 0;
+            position: relative;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0;
+        }
+
+        .mark {
+            width: 40px;
+            height: 40px;
+            background: var(--green);
+            color: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--green);
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1000;
+        }
+
+        nav {
+            display: none;
+            width: 100%;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1rem 0;
+            background: white;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 10px 10px;
+        }
+
+        nav.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        nav a {
+            padding: 10px 20px;
+            color: var(--char);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s;
+        }
+
+        nav a:hover {
+            background: var(--light-green);
+            color: var(--green);
+        }
+
+        nav a i {
+            width: 20px;
+            text-align: center;
         }
 
         nav a {
@@ -574,6 +646,38 @@
             }
         }
 
+        @media (min-width: 769px) {
+            .menu-toggle {
+                display: none;
+            }
+            
+            nav {
+                display: flex;
+                position: static;
+                width: auto;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+                flex-direction: row;
+                gap: 15px;
+            }
+            
+            nav a {
+                padding: 8px 16px;
+            }
+            
+            .cta-button {
+                background: var(--green);
+                color: white;
+                border-radius: 4px;
+            }
+            
+            .cta-button:hover {
+                background: #0a3b22;
+                color: white;
+            }
+        }
+
         @media (max-width: 600px) {
             .container {
                 padding: 15px;
@@ -651,20 +755,34 @@
                 min-height: 120px;
             }
         }
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <div class="logo">
-                <div class="logo-icon">PR</div>
+                <div class="mark">PR</div>
                 <div class="logo-text">Proof & Response</div>
             </div>
-            <nav>
-                <a href="/">Home</a>
-                <a href="/#key-disagreements">Topics</a>
-                <a href="/#faq-section">FAQ</a>
-                <a href="/community" class="cta-button">Community</a>
+            <button id="menuToggle" class="menu-toggle" aria-label="Toggle navigation menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <nav id="mainNav">
+                <a href="/"><i class="fas fa-home"></i> Home</a>
+                <a href="#key-disagreements"><i class="fas fa-book"></i> Topics</a>
+                <a href="#faq-section"><i class="fas fa-question-circle"></i> FAQ</a>
+                <a href="/community" class="cta-button"><i class="fas fa-users"></i> Community</a>
             </nav>
         </header>
 
@@ -715,6 +833,47 @@
     </div>
 
     <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        // Toggle mobile menu
+        menuToggle.addEventListener('click', function() {
+            mainNav.classList.toggle('active');
+            const icon = this.querySelector('i');
+            if (mainNav.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!mainNav.contains(event.target) && !menuToggle.contains(event.target)) {
+                mainNav.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Close menu when clicking on a nav link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mainNav.classList.remove('active');
+                const icon = menuToggle.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+                document.body.style.overflow = '';
+            });
+        });
+        
         const OWNER_CODE = "7192834650";
         let isOwnerAuthenticated = localStorage.getItem('ownerAuthenticated') === 'true';
         let currentQuestionId = null;
