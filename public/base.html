@@ -1,0 +1,417 @@
+<!-- base.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Akhi ex responds</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="logo.svg">
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ============================================================
+           BASE HEADER & FOOTER STYLES
+        ============================================================ */
+        :root {
+            --off-white: #f8f9fa;
+            --light-gray: #e9ecef;
+            --medium-gray: #adb5bd;
+            --dark-charcoal: #212529;
+            --deep-charcoal: #111316;
+            --silver: #6c757d;
+            --gold: #D4AF37;
+            --light-gold: rgba(212, 175, 55, 0.08);
+            --border-light: #dee2e6;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.05);
+            --shadow-medium: 0 8px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* ============================================================
+           FULL-WIDTH HEADER (Stretches edge-to-edge)
+        ============================================================ */
+        .full-width-header {
+            background-color: rgba(17, 19, 22, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+            margin-bottom: 40px;
+            animation: slideDownFade 0.5s ease-out;
+            width: 100%;
+            padding: 0;
+        }
+
+        .full-width-header .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .header-content {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 25px 0;
+                gap: 0;
+            }
+        }
+
+        @keyframes slideDownFade {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--off-white);
+        }
+
+        .logo .mark {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-charcoal);
+            font-weight: 800;
+            font-size: 16px;
+            box-shadow: var(--shadow-subtle);
+            transition: var(--transition);
+        }
+
+        .logo .mark:hover {
+            transform: scale(1.05) rotate(5deg);
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--dark-charcoal);
+        }
+
+        .menu-toggle {
+            display: block;
+            position: absolute;
+            right: 15px;
+            top: 20px;
+            background: none;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            color: var(--gold);
+            font-size: 1.3rem;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .menu-toggle:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.05);
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        nav {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            gap: 12px;
+            padding: 15px 0 5px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        nav.active {
+            display: flex;
+        }
+
+        nav a {
+            text-decoration: none;
+            font-weight: 500;
+            color: var(--off-white);
+            position: relative;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        nav a:hover, nav a:focus {
+            color: var(--gold);
+            background-color: rgba(212, 175, 55, 0.1);
+            transform: translateX(5px);
+        }
+
+        nav a i {
+            margin-right: 10px;
+            color: var(--gold);
+            width: 20px;
+            text-align: center;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, var(--gold), #b8941f);
+            color: var(--dark-charcoal);
+            padding: 10px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            white-space: nowrap;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+            background: linear-gradient(135deg, #b8941f, var(--gold));
+            color: var(--dark-charcoal);
+        }
+
+        /* ============================================================
+           FULL-WIDTH FOOTER (Stretches edge-to-edge)
+        ============================================================ */
+        .full-width-footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--silver);
+            font-size: 0.95rem;
+            margin-top: 60px;
+            border-top: 1px solid var(--border-light);
+            background: var(--deep-charcoal);
+            border-radius: 12px 12px 0 0;
+            width: 100%;
+        }
+
+        .full-width-footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ============================================================
+           RESPONSIVE NAVIGATION
+        ============================================================ */
+        @media (min-width: 768px) {
+            .menu-toggle {
+                display: none;
+            }
+            nav {
+                display: flex;
+                flex-direction: row;
+                gap: 25px;
+                padding: 0;
+                border-top: none;
+                animation: none;
+                width: auto;
+            }
+            nav a {
+                padding: 8px 0;
+            }
+            nav a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: var(--gold);
+                transition: width 0.3s ease;
+            }
+            nav a:hover::after {
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .header-content {
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                padding: 25px 0;
+                gap: 0;
+                text-align: left;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* ============================================================
+   FIXES FOR LAYOUT ISSUES
+============================================================ */
+
+/* Ensure body takes full height */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main content should grow to push footer down */
+main, #app + .container {
+    flex: 1;
+}
+
+/* Fix container alignment */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    width: 100%;
+}
+
+/* Fix for index.html specific layout */
+.hero {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Make sure question box is properly sized */
+.question-container {
+    background: var(--card);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    padding: 0;
+    margin: 20px 0;
+    overflow: hidden;
+    position: relative;
+    animation: slideUp 0.8s ease-out 0.6s both;
+    color: var(--charcoal);
+}
+
+/* Fix footer position */
+.full-width-footer {
+    margin-top: auto; /* Pushes footer to bottom */
+}
+
+/* Responsive fixes */
+@media (min-width: 1024px) {
+    .hero {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: center;
+        padding: 60px 0;
+        min-height: 80vh;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Full Width Header -->
+    <header class="full-width-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="mark">
+                        <i class="fas fa-mosque"></i>
+                    </div>
+                    <div>
+                        <div>Akhi ex responds</div>
+                        <div style="font-size:12px; color: #D4AF37;">Islamic responses to major Christian claims</div>
+                    </div>
+                </div>
+
+                <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <nav id="mainNav">
+                    <!-- Navigation links will be populated by each page -->
+                    <div id="navLinks"></div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content will be inserted here -->
+    <div id="content"></div>
+
+    <!-- Full Width Footer -->
+    <footer class="full-width-footer">
+        <div class="container">
+            <div id="footerContent"></div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle Script
+        const menuToggle = document.getElementById('menuToggle');
+        const mainNav = document.getElementById('mainNav');
+        
+        if (menuToggle && mainNav) {
+            // Toggle mobile menu
+            menuToggle.addEventListener('click', function() {
+                mainNav.classList.toggle('active');
+                const icon = this.querySelector('i');
+                if (mainNav.classList.contains('active')) {
+                    icon.classList.remove('fa-bars');
+                    icon.classList.add('fa-times');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!mainNav.contains(event.target) && !menuToggle.contains(event.target)) {
+                    mainNav.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                }
+            });
+            
+            // Close menu when clicking on a nav link
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mainNav.classList.remove('active');
+                    const icon = menuToggle.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                    document.body.style.overflow = '';
+                });
+            });
+        }
+    </script>
+</body>
+</html>

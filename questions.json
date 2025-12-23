@@ -9,9 +9,10 @@
       "ip": "::1",
       "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
       "status": "pending",
-      "likes": 1,
+      "likes": 2,
       "likedBy": [
-        "user_k2dl7w3ut"
+        "user_k2dl7w3ut",
+        "user_42tiqz2gn"
       ],
       "answers": [
         {
@@ -31,6 +32,21 @@
           "replies": []
         }
       ]
+    },
+    {
+      "id": 1766419846067,
+      "name": "User",
+      "email": "user@example.com",
+      "question": "HOW CAN I GET A FREE COPY OF QURAN",
+      "timestamp": "2025-12-22T16:10:46.067Z",
+      "ip": "::1",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+      "status": "pending",
+      "likes": 1,
+      "likedBy": [
+        "user_42tiqz2gn"
+      ],
+      "answers": []
     }
   ]
 }
