@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -182,7 +183,6 @@
             margin-bottom: 40px;
             padding: 20px 0;
             animation: slideUp 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
-            z-index: 9999; /* FIXED: Ensure header appears above all content */
         }
 
         .simplified-header .container {
@@ -304,7 +304,7 @@
             padding: 20px;
             margin-top: 10px;
             box-shadow: var(--shadow-strong);
-            z-index: 1000;
+            z-index: 9999; /* FIXED: Increased z-index to appear above everything */
         }
 
         .simplified-nav.active {
@@ -898,7 +898,7 @@
             color: var(--pure-white);
             transition: all var(--transition-fast);
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .faq-question-3d:hover {
@@ -941,7 +941,7 @@
             color: var(--pure-white);
             line-height: 1.9;
             position: relative;
-            overflow: visible;
+            overflow: hidden;
         }
 
         .quran-verse-glass::before {
@@ -1100,7 +1100,7 @@
         padding: 20px;
         margin-top: 10px;
         box-shadow: var(--shadow-strong);
-        z-index: 1000;
+        z-index: 9999; /* FIXED: Increased z-index */
         flex-direction: column;
     }
     

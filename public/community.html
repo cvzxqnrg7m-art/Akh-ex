@@ -206,7 +206,6 @@
             box-shadow: var(--shadow-strong);
             position: relative;
             min-height: 60px; /* Ensure consistent height */
-            z-index: 9999; /* FIXED: Ensure header appears above all content */
         }
 
         .header-content::before {
@@ -308,7 +307,7 @@
             padding: 15px;
             margin-top: 8px;
             box-shadow: var(--shadow-strong);
-            z-index: 1000;
+            z-index: 9999; /* FIXED: Increased z-index to appear above everything */
         }
 
         nav.active {
@@ -1074,7 +1073,7 @@
         padding: 15px;
         margin-top: 8px;
         box-shadow: var(--shadow-strong);
-        z-index: 1000;
+        z-index: 9999; /* FIXED: Increased z-index */
         flex-direction: column;
     }
 
