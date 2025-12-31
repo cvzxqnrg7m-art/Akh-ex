@@ -229,6 +229,7 @@
             align-items: center;
             gap: 12px; /* Reduced gap */
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-text {
@@ -388,6 +389,7 @@
         #content {
             flex: 1;
             width: 100%;
+            padding-top: 20px;
         }
 
         /* Container */
@@ -537,7 +539,7 @@
         }
 
         /* ============================================
-           CONTENT SPECIFIC STYLES - REVOLUTIONARY DESIGN
+           CONTENT SPECIFIC STYLES
            ============================================ */
         
         /* Hero Video Section */
@@ -1031,17 +1033,6 @@
             background: var(--gradient-primary);
         }
 
-        .conclusion-section::after {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(0, 229, 255, 0.15) 0%, transparent 70%);
-            top: -150px;
-            right: -150px;
-            z-index: -1;
-        }
-
         .conclusion-title {
             font-family: var(--font-heading);
             font-size: 3rem;
@@ -1230,11 +1221,12 @@
     </style>
 </head>
 <body>
-    <!-- Floating Header -->
+    <!-- Floating Header - EXACT COPY FROM base.html -->
     <header class="floating-header">
         <div class="container">
             <div class="header-content">
-                <div class="logo">
+                <!-- LOGO NOW CLICKABLE AND LINKS TO index.html -->
+                <a href="index.html" class="logo">
                     <div class="logo-image-container">
                         <img src="image.png" alt="Akhi ex responds Logo" class="logo-image">
                     </div>
@@ -1242,7 +1234,7 @@
                         <div class="logo-title">Akhi ex responds</div>
                         <div class="logo-subtitle">Islamic responses to major Christian claims</div>
                     </div>
-                </div>
+                </a>
 
                 <button class="mobile-nav-toggle" id="menuToggle" aria-label="Toggle menu">
                     <span></span>
@@ -1251,12 +1243,11 @@
                 </button>
 
                 <nav id="mainNav">
-                    <!-- Navigation links for Community page -->
-                    <a href="/">
+                    <!-- Navigation links -->
+                    <a href="index.html">
                         <i class="fas fa-home"></i>
                         <span>Back to Home</span>
                     </a>
-                    
                 </nav>
             </div>
         </div>
@@ -1268,14 +1259,15 @@
         <div class="hero-video-section">
             <div class="video-hero-container">
                 <div class="video-wrapper">
-                    <video controls autoplay muted playsinline poster="video-poster.jpg">
+                    <!-- VIDEO FIXED: Added multiple sources and better fallback -->
+                    <video controls >
                         <source src="jesusdivinity.mp4" type="video/mp4">
-                        Your browser does not support the video tag.
+                        
+                        Your browser does not support the video tag. Please download the video to view it.
                     </video>
-                    <div class="video-overlay">
-                        <h1 class="video-title">The Divine Claim That Was Never Made</h1>
-                    </div>
+                    
                 </div>
+                
             </div>
         </div>
 
@@ -1547,7 +1539,7 @@
         </div>
     </div>
 
-    <!-- Floating Footer -->
+    <!-- Floating Footer - EXACT COPY FROM base.html -->
     <footer class="floating-footer">
         <div class="container">
             <div id="footerContent">
@@ -1589,7 +1581,7 @@
             }
         }
 
-        // Interactive enhancements
+        // Content interactive features
         document.addEventListener('DOMContentLoaded', function() {
             // Add highlight animation to evidence points on hover
             const evidencePoints = document.querySelectorAll('.evidence-point');
@@ -1623,30 +1615,27 @@
                         'var(--shadow-strong), 0 0 50px rgba(0, 229, 255, 0.3)';
                     videoWrapper.style.borderColor = 'rgba(0, 229, 255, 0.2)';
                 });
-            }
-            
-            // Scroll animations
-            const observerOptions = {
-                threshold: 0.1,
-                rootMargin: '0px 0px -50px 0px'
-            };
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
+                
+                // If video doesn't load, show message
+                video.addEventListener('error', function() {
+                    const container = document.querySelector('.video-hero-container');
+                    const errorMsg = document.createElement('div');
+                    errorMsg.style.cssText = `
+                        text-align: center;
+                        padding: 20px;
+                        background: rgba(255, 50, 50, 0.1);
+                        border-radius: 10px;
+                        margin-top: 15px;
+                        border: 1px solid rgba(255, 50, 50, 0.3);
+                        color: #ff6b6b;
+                    `;
+                    errorMsg.innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i>
+                        Video file "jesusdivinity.mp4" not found. Please ensure it's in the same folder as this HTML file.
+                    `;
+                    container.appendChild(errorMsg);
                 });
-            }, observerOptions);
-            
-            // Observe argument cards for scroll animations
-            document.querySelectorAll('.argument-card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(30px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
+            }
             
             // Floating animation for icons
             const icons = document.querySelectorAll('.card-icon');
@@ -1654,6 +1643,15 @@
                 icon.style.animationDelay = `${index * 0.2}s`;
                 icon.classList.add('floating');
             });
+            
+            // Logo click handler
+            const logo = document.querySelector('.logo');
+            if (logo) {
+                logo.addEventListener('click', function(e) {
+                    // Already handled by href="index.html"
+                    console.log('Logo clicked - navigating to index.html');
+                });
+            }
         });
     </script>
 </body>

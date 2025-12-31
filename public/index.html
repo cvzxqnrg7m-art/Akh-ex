@@ -112,7 +112,6 @@
             position: relative;
             animation: 
                 float3D 4s infinite ease-in-out,
-                /* REMOVED: morphShape 8s infinite ease-in-out, */
                 glowPulse 3s infinite ease-in-out;
             box-shadow: 
                 0 0 60px rgba(26, 35, 126, 0.6),
@@ -222,8 +221,6 @@
             from { transform: rotateY(0) rotateX(0); }
             to { transform: rotateY(360deg) rotateX(360deg); }
         }
-
-        /* REMOVED: morphShape animation since we don't need triangle shapes */
 
         @keyframes shimmer {
             0% { background-position: -1000px 0; }
@@ -951,16 +948,14 @@
             border-radius: var(--border-radius-lg);
             overflow: hidden;
             transition: all var(--transition-normal);
-            /* REMOVED: transform-style: preserve-3d; */
         }
 
         .faq-item-3d.active {
             background: rgba(255, 255, 255, 0.15);
             box-shadow: 
                 var(--shadow-strong),
-                0 0 40px rgba(0, 229, 255, 0.25); /* Increased glow for highlight */
-            /* REMOVED: transform: translateZ(10px); */
-            border-color: var(--neon-blue); /* Added border color change */
+                0 0 40px rgba(0, 229, 255, 0.25);
+            border-color: var(--neon-blue);
         }
 
         .faq-question-3d {
@@ -1094,8 +1089,22 @@
            ============================================ */
         .question-container-bottom {
             margin: 30px auto;
-            max-width: 600px;
+            max-width: 900px; /* CHANGED: Made same width as FAQ section */
             width: 100%;
+        }
+
+        /* CHANGED: Make the bottom question card take full width and reduce height */
+        .question-container-bottom .question-card-inner {
+            padding: 20px; /* Reduced padding for smaller height */
+        }
+
+        .question-container-bottom .question-card-header {
+            margin-bottom: 20px; /* Reduced margin */
+        }
+
+        .question-container-bottom .question-textarea {
+            min-height: 120px; /* Reduced height */
+            padding: 15px;
         }
 
         /* ============================================
@@ -1181,6 +1190,21 @@
             
             .simplified-header-content {
                 padding: 10px 15px;
+                min-height: 55px;
+            }
+            
+            /* Header size adjustments for consistency with community.html */
+            .logo-image-container {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .simplified-logo-title {
+                font-size: 16px;
+            }
+            
+            .simplified-logo-subtitle {
+                font-size: 9px;
             }
             
             /* Loading screen adjustments */
@@ -1205,6 +1229,43 @@
 
         /* Desktop styles - SEPARATE media query */
         @media (min-width: 768px) {
+            /* CHANGED: Hero container for desktop - side by side layout */
+            .hero-container {
+                flex-direction: row;
+                align-items: flex-start;
+                gap: 40px;
+                padding: 40px 20px 40px; /* Reduced bottom padding from 80px to 40px */
+            }
+            
+            /* CHANGED: Hero content takes 60% width */
+            .hero-content {
+                flex: 1;
+                text-align: left;
+                padding-right: 20px;
+                animation: slideUp 0.8s ease-out 0.3s both;
+                max-width: 60%;
+            }
+            
+            /* CHANGED: Question card takes 40% width */
+            .question-card-3d {
+                flex: 1;
+                max-width: 40%;
+                min-width: 350px;
+                animation: slideUp 0.8s ease-out 0.5s both;
+            }
+            
+            /* CHANGED: Hero actions alignment */
+            .hero-actions {
+                justify-content: flex-start;
+                padding: 0;
+            }
+            
+            /* CHANGED: Action button sizing for desktop */
+            .action-btn {
+                min-width: 200px;
+                max-width: 250px;
+            }
+            
             .simplified-nav {
                 display: flex !important;
                 position: static;
@@ -1252,13 +1313,53 @@
                 box-shadow: none;
             }
             
-            .hero-container {
-                padding: 40px 20px 80px;
+            /* CHANGED: Topics grid to show 5 cards horizontally on desktop */
+            .topics-grid {
+                grid-template-columns: repeat(5, 1fr);
+                gap: 15px;
             }
             
-            .topics-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-                gap: 25px;
+            /* CHANGED: Reduce topic card padding for better fit in 5 columns */
+            .topic-card-3d {
+                padding: 15px;
+            }
+            
+            /* CHANGED: Smaller topic icons for 5-column layout */
+            .topic-icon-wrapper {
+                width: 45px;
+                height: 45px;
+                margin-bottom: 15px;
+            }
+            
+            .topic-icon {
+                font-size: 20px;
+            }
+            
+            /* CHANGED: Smaller font sizes for topic cards */
+            .topic-card-title {
+                font-size: 1rem;
+                margin-bottom: 8px;
+            }
+            
+            .topic-card-description {
+                font-size: 0.85rem;
+                margin-bottom: 15px;
+                line-height: 1.4;
+            }
+            
+            .topic-card-link {
+                font-size: 13px;
+                padding: 8px 15px;
+            }
+            
+            /* CHANGED: Reduce spacing between sections */
+            .topics-section {
+                padding: 30px 15px;
+                margin-top: -20px; /* Pull sections closer together */
+            }
+            
+            .section-header {
+                margin-bottom: 25px;
             }
         }
 
@@ -1297,16 +1398,16 @@
             }
             
             .logo-image-container {
-                width: 45px;
-                height: 45px;
+                width: 40px;
+                height: 40px;
             }
             
             .simplified-logo-title {
-                font-size: 18px;
+                font-size: 16px;
             }
             
             .simplified-logo-subtitle {
-                font-size: 10px;
+                font-size: 9px;
             }
             
             .loading-orb {
@@ -1487,125 +1588,8 @@
         </div>
     </div>
 
-    <!-- Key Disagreements Section -->
-    <section class="topics-section" id="key-disagreements">
-        <div class="section-header">
-            <h2 class="section-title">Key Disagreements Between Islam and Christianity</h2>
-            <p class="section-subtitle">Examining fundamental theological differences through evidence-based analysis</p>
-        </div>
-        
-        <div class="topics-grid">
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-cross topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Jesus Never Claimed Divinity</h3>
-                <p class="topic-card-description">Examining Jesus' own statements about his nature and mission versus later Christian doctrines</p>
-                <a class="topic-card-link" href="jesusdivinity.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
 
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-church topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Evolution of Trinity Doctrine</h3>
-                <p class="topic-card-description">How the concept of Trinity developed over centuries through church councils</p>
-                <a class="topic-card-link" href="trinity-evolution.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-book topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Biblical Textual Integrity</h3>
-                <p class="topic-card-description">Anonymous authorship and textual variations in the New Testament</p>
-                <a class="topic-card-link" href="biblical-integrity.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-user topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Paul: Apostle or Apostate?</h3>
-                <p class="topic-card-description">Evaluating Paul's teachings versus Jesus' original message</p>
-                <a class="topic-card-link" href="paul-apostate.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-star-and-crescent topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Pagan Origins of Christianity</h3>
-                <p class="topic-card-description">Pagan influences on Christian doctrines versus pure monotheism</p>
-                <a class="topic-card-link" href="pagan-origins.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-balance-scale topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Jesus' Teachings vs Christianity</h3>
-                <p class="topic-card-description">How Jesus' original message contradicts modern Christian doctrines</p>
-                <a class="topic-card-link" href="jesus-vs-christianity.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-shield-alt topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Original Sin & Atonement</h3>
-                <p class="topic-card-description">Islamic rejection of inherited sin versus Christian doctrine of atonement</p>
-                <a class="topic-card-link" href="original-sin.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-times topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Crucifixion Narrative</h3>
-                <p class="topic-card-description">Is Crucifixion really historically accurate?</p>
-                <a class="topic-card-link" href="crucifixion.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-
-            <article class="topic-card-3d">
-                <div class="topic-icon-wrapper">
-                    <i class="fas fa-hands-praying topic-icon"></i>
-                </div>
-                <h3 class="topic-card-title">Salvation Concept</h3>
-                <p class="topic-card-description">Faith versus works in Islamic and Christian theology</p>
-                <a class="topic-card-link" href="salvation.html">
-                    Read Analysis
-                    <i class="fas fa-arrow-right"></i>
-                </a>
-            </article>
-        </div>
-    </section>
-
-    <!-- Proving Islam Section -->
+        <!-- Proving Islam Section -->
     <section class="topics-section" id="proving-islam">
         <div class="section-header">
             <h2 class="section-title">Proving Islam: Evidence & Responses</h2>
@@ -1636,6 +1620,18 @@
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </article>
+
+            <article class="topic-card-3d">
+    <div class="topic-icon-wrapper">
+        <i class="fas fa-user-secret topic-icon"></i>
+    </div>
+    <h3 class="topic-card-title">Is Allah a Deceiver?</h3>
+    <p class="topic-card-description">Responding to claims about Allah's nature in the Quran</p>
+    <a class="topic-card-link" href="allah-deceiver.html">
+        Read Analysis
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
 
             <article class="topic-card-3d">
                 <div class="topic-icon-wrapper">
@@ -1720,8 +1716,142 @@
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </article>
+
+            
         </div>
     </section>
+
+    <!-- Key Disagreements Section -->
+    <section class="topics-section" id="key-disagreements">
+        <div class="section-header">
+            <h2 class="section-title">Key Disagreements Between Islam and Christianity</h2>
+            <p class="section-subtitle">Examining fundamental theological differences through evidence-based analysis</p>
+        </div>
+        
+        <div class="topics-grid">
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-cross topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Jesus Never Claimed Divinity</h3>
+                <p class="topic-card-description">Examining Jesus' own statements about his nature and mission versus later Christian doctrines</p>
+                <a class="topic-card-link" href="jesusdivinity.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-church topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Evolution of Trinity Doctrine</h3>
+                <p class="topic-card-description">How the concept of Trinity developed over centuries through church councils</p>
+                <a class="topic-card-link" href="trinityevolution.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-book topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Biblical Textual Integrity</h3>
+                <p class="topic-card-description">Anonymous authorship and textual variations in the New Testament</p>
+                <a class="topic-card-link" href="biblical-integrity.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+    <div class="topic-icon-wrapper">
+        <i class="fas fa-circle-exclamation topic-icon"></i>
+    </div>
+    <h3 class="topic-card-title">Bible Contradictions & Errors</h3>
+    <p class="topic-card-description">Examining internal inconsistencies and historical errors in biblical texts</p>
+    <a class="topic-card-link" href="bible-contradictions.html">
+        Read Analysis
+        <i class="fas fa-arrow-right"></i>
+    </a>
+</article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-user topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Paul: Apostle or Apostate?</h3>
+                <p class="topic-card-description">Evaluating Paul's teachings versus Jesus' original message</p>
+                <a class="topic-card-link" href="paul-apostate.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-star-and-crescent topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Pagan Origins of Christianity</h3>
+                <p class="topic-card-description">Pagan influences on Christian doctrines versus pure monotheism</p>
+                <a class="topic-card-link" href="pagan-origins.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-balance-scale topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Jesus' Teachings vs Christianity</h3>
+                <p class="topic-card-description">How Jesus' original message contradicts modern Christian doctrines</p>
+                <a class="topic-card-link" href="jesus-vs-christianity.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-shield-alt topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Original Sin & Atonement</h3>
+                <p class="topic-card-description">Islamic rejection of inherited sin versus Christian doctrine of atonement</p>
+                <a class="topic-card-link" href="original-sin.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-times topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Crucifixion Narrative</h3>
+                <p class="topic-card-description">Is Crucifixion really historically accurate?</p>
+                <a class="topic-card-link" href="crucifixion.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+
+            <article class="topic-card-3d">
+                <div class="topic-icon-wrapper">
+                    <i class="fas fa-hands-praying topic-icon"></i>
+                </div>
+                <h3 class="topic-card-title">Salvation Concept</h3>
+                <p class="topic-card-description">Faith versus works in Islamic and Christian theology</p>
+                <a class="topic-card-link" href="salvation.html">
+                    Read Analysis
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </article>
+        </div>
+    </section>
+
+
 
     <!-- FAQ Section -->
     <section class="faq-section" id="faq-section">
@@ -1845,6 +1975,58 @@
                     <p>This understanding of sin and salvation makes logical sense — every person is responsible for what they do, and everyone has the chance to seek forgiveness and earn Allah's mercy.</p>
                 </div>
             </div>
+            <div class="faq-item-3d">
+    <div class="faq-question-3d">
+        <span>Does Galatians 1:8 prove the Quran is cursed?</span>
+        <i class="fas fa-chevron-down faq-icon-3d"></i>
+    </div>
+    <div class="faq-answer-3d">
+        <p>Some Christians cite Galatians 1:8 as evidence against the Quran, but this argument is problematic for several reasons:</p>
+
+        <div class="quran-verse-glass">"But even if we or an angel from heaven should preach a gospel other than the one we preached to you, let them be under God's curse!" (Galatians 1:8, NIV)</div>
+
+        <p><strong>1. Paul's authority issue:</strong> Paul wrote these words himself. He was not among the original disciples of Jesus, and his apostleship was contested even during his time. The Quran mentions that people before Muhammad ﷺ also received revelation but some altered it.</p>
+
+        <div class="quran-verse-glass">"So woe to those who write the Scripture with their own hands, then say, 'This is from Allah,' in order to exchange it for a small price. Woe to them for what their hands have written and woe to them for what they earn." (Quran 2:79)</div>
+
+        <p><strong>2. Different message, different revelation:</strong> The Quran is not "another gospel" of Jesus - it's the final revelation from Allah to all humanity through Prophet Muhammad ﷺ. Jesus in the Gospels predicted another Comforter/Helper (John 14:16, 15:26, 16:7) who would guide to all truth.</p>
+
+        <p><strong>3. Self-referential problem:</strong> If Paul can curse future revelations, then by the same logic, Moses could have cursed Jesus' teachings, or Jesus could have cursed Paul's writings. Revelation doesn't work by cursing future prophets.</p>
+
+        <p><strong>4. The Quran confirms true Christianity:</strong> The Quran confirms the true teachings of Jesus while correcting distortions that entered over time. Muslims believe in Jesus as a prophet, born of virgin Mary, performing miracles by Allah's permission.</p>
+
+        <p>The Quran actually warns against following human writings over divine revelation, which aligns with the concern Paul expresses, but applied in reverse direction.</p>
+    </div>
+</div>
+
+<div class="faq-item-3d">
+    <div class="faq-question-3d">
+        <span>Was Prophet Muhammad ﷺ scared by the angel?</span>
+        <i class="fas fa-chevron-down faq-icon-3d"></i>
+    </div>
+    <div class="faq-answer-3d">
+        <p>Yes, Prophet Muhammad ﷺ was initially frightened when Angel Gabriel first appeared to him, but this is perfectly understandable and actually supports his prophethood:</p>
+
+        <p><strong>1. Normal human reaction:</strong> Imagine being alone in a cave when a majestic being appears and commands you to "Read!" when you're illiterate. Any human would be startled. This shows Muhammad ﷺ was not expecting this nor fabricating it.</p>
+
+        <p><strong>2. Biblical parallels:</strong> Many prophets in the Bible also showed fear when encountering angels or divine manifestations:</p>
+        <ul>
+            <li><strong>Moses:</strong> "Moses hid his face, because he was afraid to look at God." (Exodus 3:6)</li>
+            <li><strong>Gideon:</strong> "When Gideon realized that it was the angel of the Lord, he exclaimed, 'Alas, Sovereign Lord! I have seen the angel of the Lord face to face!'" (Judges 6:22)</li>
+            <li><strong>Daniel:</strong> "I had no strength left, my face turned deathly pale and I was helpless." (Daniel 10:8)</li>
+            <li><strong>Mary:</strong> "Mary was greatly troubled at his words and wondered what kind of greeting this might be." (Luke 1:29)</li>
+            <li><strong>Zechariah:</strong> "Zechariah was startled and was gripped with fear." (Luke 1:12)</li>
+        </ul>
+
+        <p><strong>3. Shows authenticity:</strong> If Muhammad ﷺ were making up the story, he could have portrayed himself as completely confident and ready. The fact that he reported his fear makes the account more credible.</p>
+
+        <p><strong>4. Later confidence:</strong> After understanding his mission and receiving support from his wife Khadijah and her cousin Waraqah ibn Nawfal (a Christian scholar), Prophet Muhammad ﷺ carried out his mission with unwavering courage for 23 years despite persecution.</p>
+
+        <div class="quran-verse-glass">"You were not expecting the Book to be revealed to you, but it is a mercy from your Lord. So never be a supporter of the disbelievers." (Quran 28:86)</div>
+
+        <p>The initial fear confirms that Muhammad ﷺ was not seeking prophethood - it was thrust upon him by Allah, just as it was with previous prophets who also initially felt inadequate or fearful.</p>
+    </div>
+</div>
 
             <div class="faq-item-3d">
                 <div class="faq-question-3d">
@@ -1950,7 +2132,15 @@
     <footer class="special-footer">
         <div class="container">
             <div style="font-size: 1.2rem; font-weight: 600; margin-bottom: 10px;">Akhi ex responds Community</div>
-            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.6);">© 2024 Islamic Apologetics Platform</div>
+            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.6); margin-bottom: 8px;">
+                © 2024 Islamic Apologetics Platform
+            </div>
+            <!-- CHANGED: Instagram link now opens Instagram directly -->
+            <div style="font-size: 14px;">
+                <a href="https://www.instagram.com/akhi_ex/" target="_blank" style="color: var(--neon-blue); text-decoration: none;">
+                    <i class="fab fa-instagram"></i> @akhi_ex
+                </a>
+            </div>
         </div>
     </footer>
 
