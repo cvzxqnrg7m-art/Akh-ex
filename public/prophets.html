@@ -489,19 +489,61 @@
             height: 40px;
             font-size: 20px;
         }
+            /* ADD THESE TEXT SIZE REDUCTIONS: */
+    .prophet-name {
+        font-size: 1.6rem; /* Was 2rem */
     }
+    
+    .prophet-story {
+        font-size: 0.95rem; /* Was 1.05rem */
+        line-height: 1.5; /* Reduce line height */
+    }
+    
+    .prophet-arabic {
+        font-size: 1.2rem; /* Was 1.5rem */
+    }
+    
+    .quran-text {
+        font-size: 1rem; /* Was 1.3rem */
+    }
+    
+    .miracle-text, .teaching-point {
+        font-size: 0.85rem; /* Reduce these too */
+    }
+    
+    .info-value {
+        font-size: 0.85rem; /* Make info text smaller */
+    }
+}
 </style>
 </head>
 <body>
-    <!-- Header -->
+    <!-- Floating Header -->
     <header class="floating-header">
         <div class="container">
             <div class="header-content">
                 <a href="index.html" class="logo">
+                    <div class="logo-image-container">
+                        <img src="image.png" alt="Akhi ex responds Logo" class="logo-image">
+                    </div>
                     <div class="logo-text">
                         <div class="logo-title">Akhi ex responds</div>
+                        <div class="logo-subtitle">Pagan Origins of Christian Traditions</div>
                     </div>
                 </a>
+
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <a href="index.html" class="home-button" aria-label="Back to Home">
+                        <i class="fas fa-home"></i>
+                    </a>
+                    <button class="mobile-nav-toggle" id="menuToggle" aria-label="Toggle menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+
+            
             </div>
         </div>
     </header>
