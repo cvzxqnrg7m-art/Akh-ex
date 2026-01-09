@@ -620,7 +620,7 @@
             border-left: 3px solid rgba(255, 255, 255, 0.3);
             padding: 25px;
             border-radius: var(--border-radius);
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             transition: all var(--transition-normal);
             position: relative;
             overflow: hidden;
@@ -706,26 +706,41 @@
            NESTED REPLIES STYLING
            ============================================ */
         .nested-replies {
-            margin-top: 20px;
-            margin-left: 20px;
+            margin-top: 15px;
             padding-left: 20px;
-            border-left: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nested-replies .reply-card-3d,
-        .nested-replies .authors-answer-3d {
-            margin-left: 0;
-            border-left-width: 2px;
         }
 
         .nested-replies .nested-replies {
             margin-left: 15px;
             padding-left: 15px;
+            border-left: 2px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Add visual indicator for nesting levels */
+        .reply-card-3d[style*="margin-left"]::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.1), transparent);
+        }
+
+        .authors-answer-3d[style*="margin-left"]::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 179, 0, 0.2), transparent);
         }
 
         /* AUTHOR'S ANSWER - SPECIAL STYLING */
         .authors-answer-3d {
             margin-top: 30px;
+            margin-bottom: 20px;
             padding: 30px;
             border-radius: var(--border-radius-lg);
             border-left: 4px solid var(--neon-gold);
@@ -1715,7 +1730,7 @@
                         </button>
                     </div>
                     
-                    ${ownerAnswers.map(answer => createReplyHTML(answer, true, q.id)).join('')}
+                    ${ownerAnswers.map(answer => createReplyHTML(answer, true, q.id, 0)).join('')}
                     
                     <div class="answers-section-3d" id="replies-${q.id}" style="display: none;">
                         <div class="section-title-3d">
@@ -1724,7 +1739,7 @@
                         </div>
                         
                         ${communityAnswers.length > 0 ? 
-                            communityAnswers.map(answer => createReplyHTML(answer, false, q.id)).join('') :
+                            communityAnswers.map(answer => createReplyHTML(answer, false, q.id, 0)).join('') :
                             '<p style="color: rgba(255, 255, 255, 0.5); padding: 30px; text-align: center;">No replies yet.</p>'
                         }
                     </div>
@@ -1732,19 +1747,34 @@
             `;
         }
 
-        function createReplyHTML(reply, isOwner = false, questionId) {
+        function createReplyHTML(reply, isOwner = false, questionId, level = 0) {
             const date = reply.date ? new Date(reply.date).toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'short', 
                 day: 'numeric' 
             }) : 'Unknown date';
             
-            const repliesHtml = reply.replies && reply.replies.length > 0 
-                ? `<div class="nested-replies">${reply.replies.map(r => createReplyHTML(r, r.isOwner, questionId)).join('')}</div>`
-                : '';
+            // Calculate margin based on nesting level
+            const marginLeft = level * 30;
+            const borderLeft = level > 0 ? '3px solid rgba(255, 255, 255, 0.1)' : 'none';
+            const paddingLeft = level > 0 ? '20px' : '0';
+            
+            // Create nested replies HTML
+            let nestedRepliesHtml = '';
+            if (reply.replies && reply.replies.length > 0) {
+                nestedRepliesHtml = `<div class="nested-replies" style="margin-left: ${marginLeft}px;">`;
+                reply.replies.forEach(nestedReply => {
+                    nestedRepliesHtml += createReplyHTML(nestedReply, nestedReply.isOwner, questionId, level + 1);
+                });
+                nestedRepliesHtml += '</div>';
+            }
             
             return `
-                <div class="${isOwner ? 'authors-answer-3d' : 'reply-card-3d'}" data-answer-id="${reply.id}" data-question-id="${questionId}">
+                <div class="${isOwner ? 'authors-answer-3d' : 'reply-card-3d'}" 
+                     data-answer-id="${reply.id}" 
+                     data-question-id="${questionId}"
+                     data-parent-id="${reply.parentAnswerId || ''}"
+                     style="margin-left: ${marginLeft}px; border-left: ${borderLeft}; padding-left: ${paddingLeft};">
                     <div class="reply-header-3d">
                         <span class="reply-author-3d">
                             ${escapeHtml(reply.author || 'Anonymous')}
@@ -1764,7 +1794,7 @@
                         </button>
                     </div>
                     
-                    ${repliesHtml}
+                    ${nestedRepliesHtml}
                 </div>
             `;
         }
@@ -1907,10 +1937,11 @@
                         author: name,
                         isOwner: isOwnerAuthenticated,
                         date: new Date().toISOString(),
+                        parentAnswerId: currentParentAnswerId, // Add this line
                         replies: []
                     };
                     
-                    const replyHtml = createReplyHTML(newReply, isOwnerAuthenticated, currentQuestionId);
+                    const replyHtml = createReplyHTML(newReply, isOwnerAuthenticated, currentQuestionId, 0);
                     
                     if (isOwnerAuthenticated) {
                         const questionElement = document.querySelector(`.question-card-3d[data-id="${currentQuestionId}"]`);
